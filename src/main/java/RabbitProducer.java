@@ -23,12 +23,12 @@ public class RabbitProducer {
         Connection connection = factory.newConnection();
         Channel channel1 = connection.createChannel();
 
-        channel1.exchangeDeclare(EXCHANGE_NAME, "direct", true, false, null);
+        // channel1.exchangeDeclare(EXCHANGE_NAME, "direct", true, false, null);
         // Specify a queue
         channel1.queueDeclare(QUEUE_NAME,false,false, false, null);
         channel1.queueBind(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);
         String message = "Hello World!!!";
-        channel1.basicPublish(EXCHANGE_NAME,ROUTING_KEY,MessageProperties.PERSISTENT_TEXT_PLAIN,message.getBytes());
+        channel1.basicPublish("",QUEUE_NAME,null,message.getBytes());
         System.out.println(" [x] Sent '"+ message +"'");
 
         channel1.close();

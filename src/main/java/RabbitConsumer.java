@@ -12,19 +12,20 @@ public class RabbitConsumer {
 
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
 
-        Address[] addresses = new Address[] {
-          new Address(IP_ADDRESS,PORT)
-        };
+//        Address[] addresses = new Address[] {
+//          new Address(IP_ADDRESS,PORT)
+//        };
 
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(IP_ADDRESS);
         factory.setUsername("root");
         factory.setPassword("root123");
 
-        Connection connection = factory.newConnection(addresses);
+        Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();
-//        channel.queueDeclare(QUEUE_NAME,false,false, false, null);
-        channel.basicQos(64);
+        // shengmingduilie fangzhixiaoxijieshouzhexianyunxingcihcuengxu,duiliehiabucunzaishichuangjianduilie
+        channel.queueDeclare(QUEUE_NAME,false,false, false, null);
+        // channel.basicQos(64);
         System.out.println(" [*] Waitting for messages.");
 
         Consumer consumer = new DefaultConsumer(channel) {
